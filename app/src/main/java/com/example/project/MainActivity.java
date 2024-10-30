@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize buttons
-        register = findViewById(R.id.register);
-        login = findViewById(R.id.login);
+        register = findViewById(R.id.buttonreg);
+        login = findViewById(R.id.buttonsignin);
 
         // Set click listener for the Register button
         register.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open the Register activity
     private void openRegisterActivity() {
-        Intent intent = new Intent(MainActivity.this, SignUp.class); // Ensure correct naming
+        Intent intent = new Intent(MainActivity.this, SignUpActivity.class); // Ensure correct naming
         startActivity(intent);
     }
 
