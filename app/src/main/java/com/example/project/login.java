@@ -86,28 +86,23 @@ public class login extends AppCompatActivity {
         String userPassword = password.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("name").equalTo(userName);
+        Query checkUserDatabase = reference.child(userName); // Directly using the name as a key
 
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // User exists
-                    name.setError(null);
-                    String passwordFromDB = snapshot.child(userName).child("password").getValue(String.class);
+                    String passwordFromDB = snapshot.child("password").getValue(String.class);
 
                     if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
-                        // Password is correct, redirect to MainActivity
                         password.setError(null);
                         Intent intent = new Intent(login.this, MainActivity.class);
                         startActivity(intent);
                     } else {
-                        // Password is incorrect
                         password.setError("Invalid credentials");
                         password.requestFocus();
                     }
                 } else {
-                    // User does not exist
                     name.setError("User does not exist");
                     name.requestFocus();
                 }
