@@ -29,7 +29,7 @@ public class HelperClass {
         this.email = email;
     }
 
-    public HelperClass(String password, String email, String name) {
+    public HelperClass(String name, String email, String password) {
         this.password = password;
         this.email = email;
         this.name = name;
