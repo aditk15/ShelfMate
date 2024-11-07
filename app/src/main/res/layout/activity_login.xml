@@ -42,8 +42,9 @@
                 android:background="@drawable/bronze_border"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
-                android:hint="Enter your Name"
+                android:hint="Enter your Email"
                 android:drawablePadding="8dp"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/Ochre"/>
 
             <EditText

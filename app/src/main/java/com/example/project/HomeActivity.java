@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Open Login Activity
-                Intent loginIntent = new Intent(HomeActivity.this, login.class);
+                Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
             }
         });

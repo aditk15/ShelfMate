@@ -44,23 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Set up button for Register
-        Button register = findViewById(R.id.buttonreg);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainViewModel.onRegisterClicked();
-            }
-        });
-
-        // Set up button for Login
-        Button login = findViewById(R.id.buttonsignin);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainViewModel.onLoginClicked();
-            }
-        });
     }
 
     // Method to open the Register activity
@@ -71,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open the Login activity
     private void openLoginActivity() {
-        Intent intent = new Intent(MainActivity.this, login.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }
