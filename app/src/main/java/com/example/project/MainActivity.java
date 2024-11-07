@@ -1,12 +1,13 @@
 package com.example.project;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,28 +18,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize ViewModel for registration and login functionality
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        // Set up BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Use OnItemSelectedListener with if-else statements
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.action_search_books) {
-                    openSearchActivity();
-                    return true;
-                } else if (item.getItemId() == R.id.action_track_books) {
-                    openTrackBookActivity();
-                    return true;
-                }
-                return false;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.action_search_books) {
+                openSearchActivity();
+                return true;
+            } else if (item.getItemId() == R.id.action_track_books) {
+                openTrackBookActivity();
+                return true;
             }
+            return false;
         });
 
-        // Observe navigation events for Register and Login buttons
         mainViewModel.getNavigateToRegister().observe(this, shouldNavigate -> {
             if (shouldNavigate != null && shouldNavigate) {
                 openRegisterActivity();
@@ -52,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 mainViewModel.resetNavigation();
             }
         });
+
+        ImageButton logoutButton = findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(v -> logoutUser());
+    }
+
+    private void logoutUser() {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(LoginActivity.KEY_USER_EMAIL); // Remove saved email
+        editor.apply();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Close MainActivity
     }
 
     private void openSearchActivity() {
