@@ -10,8 +10,15 @@ public class VolumeInfo {
     @SerializedName("authors")
     private List<String> authors;
 
+    @SerializedName("pageCount")
+    private Integer pageCount;
+
     public String getTitle() {
         return title;
+    }
+
+    public Integer getPageCount() {
+        return pageCount;
     }
 
     public List<String> getAuthors() {
