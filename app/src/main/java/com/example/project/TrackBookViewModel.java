@@ -8,11 +8,10 @@ public class TrackBookViewModel extends ViewModel {
     private final BooksRepository booksRepository;
     private final MutableLiveData<String> percentageResult = new MutableLiveData<>();
 
-    // New fields to store total pages, pages read, book title, and author
     private int totalPages;
     private int pagesRead;
-    private String bookTitle; // New field for book title
-    private String bookAuthor; // New field for book author
+    private String bookTitle;
+    private String bookAuthor;
 
     public TrackBookViewModel() {
         booksRepository = new BooksRepository();
@@ -23,40 +22,72 @@ public class TrackBookViewModel extends ViewModel {
     }
 
     public int getTotalPages() {
-        return totalPages; // Return total pages for display in activity
+        return totalPages;
     }
 
     public int getPagesRead() {
-        return pagesRead; // Return pages read for display in activity
+        return pagesRead;
     }
 
     public String getBookTitle() {
-        return bookTitle; // Return the book title
+        return bookTitle;
     }
 
     public String getBookAuthor() {
-        return bookAuthor; // Return the book author
+        return bookAuthor;
     }
 
     public void calculatePercentage(String title, int pagesRead) {
-        this.pagesRead = pagesRead; // Store the input value
-        this.bookTitle = title; // Store the title
+        this.pagesRead = pagesRead;
+        this.bookTitle = title.trim();
 
-        booksRepository.searchBooks(title, "AIzaSyDZrKG46V_6b1bndzjQaavSDnM9vVJ8dfI").observeForever(books -> {
-            if (books != null && !books.isEmpty()) {
-                VolumeInfo volumeInfo = books.get(0).getVolumeInfo();
-                this.bookAuthor = volumeInfo.getAuthors() != null ? String.join(", ", volumeInfo.getAuthors()) : "Unknown Author"; // Get authors
-                totalPages = volumeInfo.getPageCount(); // Retrieve total pages
+        booksRepository.searchBooks(bookTitle, "AIzaSyDZrKG46V_6b1bndzjQaavSDnM9vVJ8dfI")
+                .observeForever(books -> {
+                    if (books != null && !books.isEmpty()) {
+                        Book bestMatch = null;
+                        for (Book book : books) {
+                            VolumeInfo volumeInfo = book.getVolumeInfo();
+                            if (volumeInfo != null && bookTitle.toLowerCase().equals(volumeInfo.getTitle().toLowerCase().trim())) {
+                                bestMatch = book;
+                                break;
+                            }
+                        }
 
-                if (totalPages > 0) {
-                    double percentage = ((double) pagesRead / totalPages) * 100;
-                    percentageResult.setValue("You have read " + String.format("%.2f", percentage) + "% of the book.");
-                } else {
-                    percentageResult.setValue("Page count not available.");
-                }
-            } else {
-                percentageResult.setValue("Book not found.");
-            }
-        });
+                        if (bestMatch != null) {
+                            VolumeInfo volumeInfo = bestMatch.getVolumeInfo();
+                            this.bookTitle = volumeInfo.getTitle();
+                            this.bookAuthor = volumeInfo.getAuthors() != null
+                                    ? String.join(", ", volumeInfo.getAuthors())
+                                    : "Unknown Author";
+                            totalPages = volumeInfo.getPageCount();
+
+                            if (totalPages > 0) {
+                                double percentage = ((double) pagesRead / totalPages) * 100;
+
+                                int pagesLeft = totalPages - pagesRead;
+                                int pagesPerDay = 20;
+                                int approxDays = (int) Math.ceil((double) pagesLeft / pagesPerDay);
+
+                                percentageResult.setValue(
+                                        "Book Title: " + bookTitle + "\n" +
+                                                "Author(s): " + bookAuthor + "\n" +
+                                                "You have read " + String.format("%.2f", percentage) + "% of the book.\n" +
+                                                "Pages Left: " + pagesLeft + "\n" +
+                                                "Approximate Days to Finish: " + approxDays + " days (assuming " + pagesPerDay + " pages/day)."
+                                );
+                            } else {
+                                percentageResult.setValue(
+                                        "Book Title: " + bookTitle + "\n" +
+                                                "Author(s): " + bookAuthor + "\n" +
+                                                "Page count not available."
+                                );
+                            }
+                        } else {
+                            percentageResult.setValue("Exact book not found.");
+                        }
+                    } else {
+                        percentageResult.setValue("Book not found.");
+                    }
+                });
     }
 }
