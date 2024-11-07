@@ -16,14 +16,13 @@
         android:layout_marginBottom="39dp"
         android:background="@drawable/book"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/book"
         app:layout_constraintBottom_toTopOf="@+id/welcome"
         app:layout_constraintEnd_toEndOf="@+id/welcome"
         app:layout_constraintStart_toStartOf="@+id/welcome"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <!-- Button to open SearchResultsActivity -->
 
     <TextView
         android:id="@+id/welcome"
