@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
-
     private MainViewModel mainViewModel;
 
     @Override
@@ -22,6 +21,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Set up button to open TrackBookActivity
+        Button trackBookButton = findViewById(R.id.trackBookButton);
+        trackBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TrackBookActivity.class);
                 startActivity(intent);
             }
         });

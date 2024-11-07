@@ -52,4 +52,16 @@
         app:layout_constraintStart_toStartOf="@+id/welcome"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
+    <Button
+        android:id="@+id/trackBookButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/Ochre"
+        android:text="Track Books"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/openSearchButton"
+        app:layout_constraintStart_toStartOf="@+id/openSearchButton"
+        app:layout_constraintEnd_toEndOf="@+id/openSearchButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
