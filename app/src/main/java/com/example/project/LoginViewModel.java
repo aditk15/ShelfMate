@@ -1,7 +1,6 @@
 package com.example.project;
 
 import android.app.Application;
-import android.content.Intent;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -16,9 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginViewModel extends AndroidViewModel {
-
     private final DatabaseReference databaseReference;
-
     public MutableLiveData<String> name = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
     public MutableLiveData<Boolean> isLoginSuccessful = new MutableLiveData<>();
@@ -28,7 +25,6 @@ public class LoginViewModel extends AndroidViewModel {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
     }
 
-    // Validate email
     public boolean validateEmail() {
         String email = name.getValue();
         if (email == null || email.isEmpty()) {
@@ -41,7 +37,6 @@ public class LoginViewModel extends AndroidViewModel {
         return true;
     }
 
-    // Validate password
     public boolean validatePassword() {
         String pass = password.getValue();
         if (pass == null || pass.isEmpty()) {
@@ -54,7 +49,6 @@ public class LoginViewModel extends AndroidViewModel {
         return true;
     }
 
-    // Perform login
     public void loginUser() {
         if (!validateEmail() || !validatePassword()) {
             return;
@@ -84,5 +78,4 @@ public class LoginViewModel extends AndroidViewModel {
             }
         });
     }
-
 }
