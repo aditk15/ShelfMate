@@ -51,5 +51,4 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
