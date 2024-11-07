@@ -2,8 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="chocalate">#7B3F00</color>
+    <color name="chocolate">#7B3F00</color>
     <color name="caramel">#C19A6B</color>
     <color name="Bronze">#CD7F32</color>
     <color name="Ochre">#CC7722</color>
+    <color name="brown">#4E3B31</color>
 </resources>
