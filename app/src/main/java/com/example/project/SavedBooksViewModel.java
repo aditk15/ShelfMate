@@ -8,15 +8,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SavedBooksViewModel extends ViewModel {
-
     private final MutableLiveData<List<Book>> savedBooks = new MutableLiveData<>();
-    private final DatabaseReference savedBooksRef = FirebaseDatabase.getInstance().getReference("savedBooks");
+    private DatabaseReference savedBooksRef;
 
-    public SavedBooksViewModel() {
+    public void init(String userEmail) {
+        savedBooksRef = FirebaseDatabase.getInstance().getReference("savedBooks").child(userEmail.replace(".", ","));
         loadSavedBooks();
     }
 
