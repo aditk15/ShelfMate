@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Saved Books"
         android:textSize="24sp"
-        android:textColor="@color/chocalate"
+        android:textColor="@color/chocolate"
         android:layout_gravity="center"
         android:padding="8dp" />
 
