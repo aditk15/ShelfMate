@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SavedBooksActivity extends AppCompatActivity {
-
     private SavedBooksViewModel savedBooksViewModel;
     private BookAdapter bookAdapter;
 
@@ -15,6 +15,9 @@ public class SavedBooksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_books);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
+        String userEmail = sharedPreferences.getString(LoginActivity.KEY_USER_EMAIL, null);
 
         RecyclerView recyclerView = findViewById(R.id.savedBooksRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -24,6 +27,7 @@ public class SavedBooksActivity extends AppCompatActivity {
         recyclerView.setAdapter(bookAdapter);
 
         savedBooksViewModel = new ViewModelProvider(this).get(SavedBooksViewModel.class);
+        savedBooksViewModel.init(userEmail); // Pass user email to ViewModel
         savedBooksViewModel.getSavedBooks().observe(this, books -> bookAdapter.setBooks(books));
     }
 }

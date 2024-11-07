@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.action_track_books) {
                 openTrackBookActivity();
                 return true;
+            } else if (item.getItemId() == R.id.action_saved_books) {
+                openSavedBooksActivity();
+                return true;
             }
             return false;
         });
@@ -69,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void openTrackBookActivity() {
         Intent intent = new Intent(MainActivity.this, TrackBookActivity.class);
+        startActivity(intent);
+    }
+
+    private void openSavedBooksActivity() {
+        Intent intent = new Intent(MainActivity.this, SavedBooksActivity.class);
         startActivity(intent);
     }
 
