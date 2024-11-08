@@ -2,6 +2,8 @@ package com.example.project;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,8 +20,18 @@ public class SavedBooksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_books);
 
+        // Get user email from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, MODE_PRIVATE);
         String userEmail = sharedPreferences.getString(LoginActivity.KEY_USER_EMAIL, null);
+
+        // Set up back button functionality
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.savedBooksRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
