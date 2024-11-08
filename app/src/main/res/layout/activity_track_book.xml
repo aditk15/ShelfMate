@@ -23,7 +23,7 @@
         android:id="@+id/calculateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculate Percentage" />
+        android:text="Show Details" />
 
     <TextView
         android:id="@+id/bookTitleTextView"
